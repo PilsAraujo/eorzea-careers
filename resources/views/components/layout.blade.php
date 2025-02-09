@@ -4,24 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eorzea Careers</title>
-    @Vite(['resources/js/app.js'])
+    @Vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-black text-white">
     
-    <div>
-        <nav>
+    <div class="px-10">
+        <nav class="flex justify-between items-center py-4 border-b border-white/10">
             <div>
-                <a href="">
-                    <img src="{{ Vite::asset('resources/images/logo2.png')}}">
+                <a href="/">
+                    <img class="h-13 w-36 object-scale-down" src="{{ Vite::asset('resources/images/logo4.png')}}" >
                 </a>
             </div>
 
-            <div>links</div>
+            <div class="space-x-6 font-bold">
+                <a href="">Jobs</a>
+                <a href="">Roles</a>
+                <a href="">Salaries</a>
+                <a href="">Companies</a>
+            </div>
 
-            <div>post a job</div>
+            <div>
+                <a href="">Post a Job</a>
+            </div>
         </nav>
 
-        <main>
+        <main class="mt-10 max-w-[986px] mx-auto">
             {{ $slot }}
         </main>
     </div>
