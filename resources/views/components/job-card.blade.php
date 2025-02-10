@@ -1,20 +1,20 @@
-<div class="p-4 bg-white/5 rounded-xl flex flex-col text-center">
+<x-panel class="flex flex-col text-center ">
            
     <div class="self-start text-sm">Scions of the 7th Dawn</div>
     
     <div class="py-8 font-bold">
-        <h3>Paladin</h3>
-        <p>40.000 Gil</p>
+        <h3 class="group-hover:text-blue-600 text-xl font-bold transition-colors duration-300">Paladin</h3>
+        <p class="text-sm mt-4">40.000 Gil</p>
     </div>
     
     <div class="flex justify-between items-center mt-auto">
         <div>
-            <x-tag>Tag</x-tag>
-            <x-tag>Tag</x-tag>
-            <x-tag>Tag</x-tag>
+            <x-tag size="small">Tag</x-tag>
+            <x-tag size="small">Tag</x-tag>
+            <x-tag size="small">Tag</x-tag>
         </div>
 
-        <img src="http://placehold.co/42x42" alt="" class="rounded-xl">
+        <x-faction-logo :width="42" />
     </div>
 
-</div>
+</x-panel>

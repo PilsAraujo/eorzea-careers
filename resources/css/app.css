@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+    --font-signika: "Signika Negative", "serif";
+    --text-2xs: 0.625rem;
     --color-black: #060606;
   }
