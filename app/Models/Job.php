@@ -15,4 +15,14 @@ class Job extends Model
         return $this->belongsTo(Faction::class);
     }
 
+    public function tag()
+    {
+
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }
