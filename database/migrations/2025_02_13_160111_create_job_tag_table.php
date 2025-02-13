@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Faction;
 use App\Models\Job;
 use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;

@@ -15,9 +15,11 @@ class Job extends Model
         return $this->belongsTo(Faction::class);
     }
 
-    public function tag()
+    public function tag(string $name)
     {
+        $tag = Tag::firstOrCreate(['name'=> $name]);
 
+        $this->tags()->attach($tag);
     }
 
     public function tags()
