@@ -11,7 +11,7 @@
             <option>Full Time</option>
         </x-forms.select>   
 
-        <x-forms.input label="URL" name="url" placeholder="https://maelstrom.com/jobs/warrior-wanted"/>
+        <x-forms.textarea label="Description" name="description" />
         <x-forms.checkbox label="Feature (Costs Extra)" name="featured" />
 
         <x-forms.divider />

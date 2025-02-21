@@ -18,7 +18,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest()->get()->groupBy('featured');
+        $jobs = Job::latest()->with((['faction', 'tags']))->get()->groupBy('featured');
 
         return view('jobs.index', [
             'jobs' => $jobs[0],
@@ -45,7 +45,7 @@ class JobController extends Controller
             'salary'=> ['required'],
             'location'=> ['required'],
             'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
-            'url' => ['required', 'active_url'],
+            'description' => ['required'],
             'tags' => ['nullable'],
 
         ]);
@@ -69,7 +69,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        //
+        return view('jobs.show', ['job' => $job]);
     }
 
     /**
@@ -77,15 +77,46 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return view('jobs.edit', ['job' => $job]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJobRequest $request, Job $job)
+    public function update(Job $job)
     {
-        //
+        request()->validate([
+            'title' => ['required','string', 'min:3'],
+            'salary' => ['required', 'string'],
+            'location' => ['required', 'string'],
+            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+            'description' => ['required','string'],
+        ]);
+
+        $data = request()->except(['tags', '_token', '_method']);
+        $data['featured'] = request()->has('featured'); // If checked, it's true. If not, it's false.
+    
+        $job->update($data);
+    
+        // Update the tags (many-to-many relationship)
+        if (request('tags')) {
+            $tags = explode(',', request('tags')); 
+            $tagIds = [];
+
+        foreach ($tags as $tagName) {
+            $tagName = trim($tagName); // Remove spaces
+            if (!$tagName) continue; // Ignore empty tags
+
+            // Find the tag or create it if it doesn't exist
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $tagIds[] = $tag->id; // Store the tag ID
+        }
+
+        // Sync the job with the correct tags
+        $job->tags()->sync($tagIds);
+    }
+            
+        return redirect('jobs/' . $job->id);
     }
 
     /**

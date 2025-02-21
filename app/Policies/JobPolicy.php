@@ -11,7 +11,12 @@ class JobPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    
+     public function edit(User $user, Job $job) :bool 
+     {
+         return $job->faction->user->is($user);
+     }
+     public function viewAny(User $user): bool
     {
         return false;
     }

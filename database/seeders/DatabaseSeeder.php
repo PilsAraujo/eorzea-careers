@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Tataru Taru',
+            'email' => 'tataru@scions.com',
+            'password'=> bcrypt('lalala'),
         ]);
 
         $this->call(JobSeeder::class);

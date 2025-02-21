@@ -23,7 +23,7 @@ class JobFactory extends Factory
             'salary' => fake()->randomElement(['15.000 Gil', '30.000 Gil', '50.000 Gil']),
             'location' => 'Ishgard',
             'schedule' => fake()->randomElement(['Full time', 'Part Time']),
-            'url' => fake()->url,
+            'description' => fake()->text(200),
             'featured' => false,
         ];
     }
