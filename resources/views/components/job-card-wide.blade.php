@@ -8,7 +8,7 @@
 
     <div class="flex-1 flex flex-col">
         <a href="" class="self-start text-sm text-gray-500">{{ $job->faction->name }}</a>
-        <a href="/jobs/{{ $job['id'] }}" target="_blank">
+        <a href="/jobs/{{ $job['id'] }}">
         <h3 class="group-hover:text-blue-600 text-xl font-bold transition-colors duration-300">
             
                 {{ $job->title }}

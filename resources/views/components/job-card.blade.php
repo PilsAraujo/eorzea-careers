@@ -4,7 +4,7 @@
     
     <div class="self-start text-sm">{{ $job->faction->name }}</div>
     
-    <a href="/jobs/{{ $job['id'] }}" target="_blank">
+    <a href="/jobs/{{ $job['id'] }}">
         <div class="py-8 font-bold">
             <h3 class="group-hover:text-blue-600 text-xl font-bold transition-colors duration-300">
             
