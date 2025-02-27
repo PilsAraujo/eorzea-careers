@@ -17,9 +17,11 @@ class Job extends Model
 
     public function tag(string $name)
     {
+        $name = trim($name); // Remove extra spaces
+        $name = strtolower($name); // Make sure casing is consistent
+        
         $tag = Tag::firstOrCreate(['name'=> $name]);
-
-        $this->tags()->attach($tag);
+        $this->tags()->syncWithoutDetaching([$tag->id]);
     }
 
     public function tags()

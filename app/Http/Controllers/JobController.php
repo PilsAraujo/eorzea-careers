@@ -50,15 +50,20 @@ class JobController extends Controller
 
         ]);
 
-        $attributes['featured'] = $request->has('featured');
+        $attributes['featured'] = $request->has('featured'); // If checked, it's true. If not, it's false.
 
         $job = Auth::user()->faction->jobs()->create(Arr::except($attributes, ['tags']));
 
         if ($attributes['tags'] ?? false) {
-            foreach (explode(',', $attributes['tags']) as $tag) {
-                    $job->tag($tag);
-                }
+            $tags = explode(',', $attributes['tags']);
+            $tags = array_map('trim', $tags); // Remove spaces
+            $tags = array_map('strtolower', $tags); // Convert to lowercase
+            sort($tags); // 🔥 Sort them alphabetically
+        
+            foreach ($tags as $tag) {
+                $job->tag($tag);
             }
+        }
 
             return redirect('/');
         }
@@ -98,23 +103,22 @@ class JobController extends Controller
     
         $job->update($data);
     
-        // Update the tags (many-to-many relationship)
         if (request('tags')) {
-            $tags = explode(',', request('tags')); 
+            $tags = explode(',', request('tags'));
+            $tags = array_map('trim', $tags); 
+            $tags = array_map('strtolower', $tags); 
+            sort($tags); // 🔥 Sort them alphabetically
+        
             $tagIds = [];
-
-        foreach ($tags as $tagName) {
-            $tagName = trim($tagName); // Remove spaces
-            if (!$tagName) continue; // Ignore empty tags
-
-            // Find the tag or create it if it doesn't exist
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $tagIds[] = $tag->id; // Store the tag ID
+            foreach ($tags as $tagName) {
+                if (!$tagName) continue;
+        
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tagIds[] = $tag->id;
+            }
+        
+            $job->tags()->sync($tagIds);
         }
-
-        // Sync the job with the correct tags
-        $job->tags()->sync($tagIds);
-    }
             
         return redirect('jobs/' . $job->id);
     }
