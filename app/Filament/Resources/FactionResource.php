@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class FactionResource extends Resource
 {
@@ -34,7 +35,8 @@ class FactionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                ImageColumn::make('logo'),
+                ImageColumn::make('logo')
+                ->defaultImageUrl(fn ($record) => url('storage/' . $record->logo))
             ])
             ->filters([
                 //
